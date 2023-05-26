@@ -1,10 +1,37 @@
-import { useLoaderData } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { dateFormatter, getColor } from "../utils";
-import ToggleTheme from '../toggleTheme';
+import ToggleTheme from "../toggleTheme";
 
 export default function Root() {
-  const { jokes } = useLoaderData();
+  const [jokes, setJokes] = useState([]);
+  const [resultsPerPage, setResultsPerPage] = useState("5");
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://retoolapi.dev/zu9TVE/jokes/?_page=${page}&_limit=${resultsPerPage}`
+      )
+      .then((res) => {
+        if (res.status === 200) setJokes(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [page, resultsPerPage]);
+
+  const resultsPerPageHandler = (e) => {
+    setResultsPerPage(e.target.value);
+  };
+
+  const prevHandler = () => {
+    if (page > 1) setPage(page - 1);
+  };
+
+  const nextHandler = () => {
+    if (jokes.length === Number(resultsPerPage)) setPage(page + 1);
+  };
 
   return (
     <>
@@ -30,25 +57,37 @@ export default function Root() {
                 <td>{joke.Title}</td>
                 <td>{jokeAuthor}</td>
                 <td>{jokeDate}</td>
-                <td><span style={{ color }}>{joke.Views}</span></td>
+                <td>
+                  <span style={{ color }}>{joke.Views}</span>
+                </td>
               </tr>
             );
           })}
         </tbody>
       </table>
+      <div style={{ marginTop: "12px" }}>
+        <button
+          type="button"
+          onClick={prevHandler}
+        >
+          {'<'}
+        </button>
+        <button
+          type="button"
+          onClick={nextHandler}
+          style={{ marginLeft: "8px" }}
+        >
+          {'>'}
+        </button>
+        <select
+          value={resultsPerPage}
+          onChange={resultsPerPageHandler}
+          style={{ marginLeft: "8px" }}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+        </select>
+      </div>
     </>
   );
-}
-
-export async function loader() {
-  let jokes = [];
-
-  try {
-    const res = await axios.get("https://retoolapi.dev/zu9TVE/jokes");
-    if (res.status === 200) jokes = res.data;
-  } catch (error) {
-    console.error(error);
-  }
-
-  return { jokes };
 }
