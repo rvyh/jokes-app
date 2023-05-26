@@ -10,3 +10,13 @@ table tr td {
 table tr td:last-of-type {
   border: none;
 }
+
+.dark {
+  background-color: #333;
+  color: #fff;
+}
+
+.light {
+  background-color: #fff;
+  color: #333;
+}

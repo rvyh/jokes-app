@@ -1,13 +1,14 @@
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import { dateFormatter, getColor } from "../utils";
+import ToggleTheme from '../toggleTheme';
 
 export default function Root() {
   const { jokes } = useLoaderData();
 
   return (
     <>
-      <p>dark mode toggle</p>
+      <ToggleTheme />
       <p>buttons</p>
       <table>
         <thead>
