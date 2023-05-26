@@ -1,5 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
+import { dateFormatter, getColor } from "../utils";
 
 export default function Root() {
   const { jokes } = useLoaderData();
@@ -20,24 +21,8 @@ export default function Root() {
         <tbody>
           {jokes.map((joke) => {
             const jokeAuthor = joke.Author?.replace(/@[a-z0-9-]+\./, "@***.");
-            
-            let jokeDate = "";
-            let date;
-            if (Number.isInteger(joke.CreatedAt)) {
-              date = new Date(joke.CreatedAt);
-            } else if (typeof joke.CreatedAt === "string") {
-              date = new Date(joke.CreatedAt.replace(/\//g, "-"));
-            }
-            if (date !== undefined)
-              jokeDate = `${date.getDate()} ${date.toLocaleString("en-US", {
-                month: "short",
-              })} ${date.getFullYear()}`;
-            
-            let color = "";
-            if (joke.Views <= 25) color = "tomato"
-            else if (joke.Views <= 50) color = "orange"
-            else if (joke.Views <= 75) color = "yellow"
-            else if (joke.Views <= 100) color = "green"
+            const jokeDate = dateFormatter(joke.CreatedAt);
+            const color = getColor(joke.Views);
 
             return (
               <tr key={joke.id}>
