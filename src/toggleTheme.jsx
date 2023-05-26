@@ -21,7 +21,7 @@ export default function ToggleTheme() {
   return (
     <div>
       <input type="checkbox" id="themeToggle" checked={checked} onChange={toggleTheme} />
-      <label for="themeToggle">Dark</label>
+      <label htmlFor="themeToggle">Dark</label>
     </div>
   );
 } 
