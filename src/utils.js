@@ -1,6 +1,7 @@
 /* Useful utilities */
 
-// takes a date as an integer or string, and returns a date in format 25 May 2023
+/* takes a date as an integer (Unix timestamp) or string (e.g. 2023/05/27 or 2023-05-27) 
+and returns a date in format 27 May 2023 */
 export function dateFormatter(inputDate) {
   let jokeDate = "";
   let date;

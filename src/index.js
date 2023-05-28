@@ -6,12 +6,17 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Root from "./routes/root";
+import Root from './routes/root';
+import EditJoke from './routes/editJoke';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />
+  },
+  {
+    path: "joke/:id",
+    element: <EditJoke />
   },
 ]);
 

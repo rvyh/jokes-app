@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { dateFormatter, getColor } from "../utils";
-import ToggleTheme from "../toggleTheme";
+import ToggleTheme from "../common/toggleTheme";
+import { Link } from "react-router-dom";
 
 export default function Root() {
   const [jokes, setJokes] = useState([]);
@@ -21,15 +22,15 @@ export default function Root() {
       });
   }, [page, resultsPerPage]);
 
-  const resultsPerPageHandler = (e) => {
+  const handleResultsPerPage = (e) => {
     setResultsPerPage(e.target.value);
   };
 
-  const prevHandler = () => {
+  const handlePrev = () => {
     if (page > 1) setPage(page - 1);
   };
 
-  const nextHandler = () => {
+  const handleNext = () => {
     if (jokes.length === Number(resultsPerPage)) setPage(page + 1);
   };
 
@@ -54,7 +55,7 @@ export default function Root() {
 
             return (
               <tr key={joke.id}>
-                <td>{joke.Title}</td>
+                <td><Link to={`joke/${joke.id}`}>{joke.Title}</Link></td>
                 <td>{jokeAuthor}</td>
                 <td>{jokeDate}</td>
                 <td>
@@ -68,20 +69,20 @@ export default function Root() {
       <div style={{ marginTop: "12px" }}>
         <button
           type="button"
-          onClick={prevHandler}
+          onClick={handlePrev}
         >
           {'<'}
         </button>
         <button
           type="button"
-          onClick={nextHandler}
+          onClick={handleNext}
           style={{ marginLeft: "8px" }}
         >
           {'>'}
         </button>
         <select
           value={resultsPerPage}
-          onChange={resultsPerPageHandler}
+          onChange={handleResultsPerPage}
           style={{ marginLeft: "8px" }}
         >
           <option value="5">5</option>
