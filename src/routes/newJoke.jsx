@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Form from "../common/form";
 import ToggleTheme from "../common/toggleTheme";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function EditJoke() {
-  let { id } = useParams();
+export default function NewJoke() {
   const navigate = useNavigate();
 
-  const [joke, setJoke] = useState({});
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [author, setAuthor] = useState("");
@@ -16,26 +14,6 @@ export default function EditJoke() {
   /* Assuming CreatedAt can be an integer (Unix timestamp) or string (e.g. 2023/05/27)
   because that's what I've seen in the API when I started with this challenge */
   const [createdAt, setCreatedAt] = useState("");
-
-  useEffect(() => {
-    axios
-      .get(`https://retoolapi.dev/zu9TVE/jokes/${id}`)
-      .then((res) => {
-        if (res.status === 200) {
-          setJoke(res.data);
-          setTitle(typeof res.data.Title === "string" ? res.data.Title : "");
-          setBody(typeof res.data.Body === "string" ? res.data.Body : "");
-          setAuthor(typeof res.data.Author === "string" ? res.data.Author : "");
-          setViews(typeof res.data.Views !== "undefined" ? res.data.Views : "");
-          setCreatedAt(
-            typeof res.data.CreatedAt !== "undefined" ? res.data.CreatedAt : ""
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
 
   const handleTitle = (e) => {
     setTitle(e.target.value);
@@ -61,17 +39,6 @@ export default function EditJoke() {
     navigate("/");
   };
 
-  const handleDelete = () => {
-    axios
-      .delete(`https://retoolapi.dev/zu9TVE/jokes/${id}`)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
   const handleSubmit = () => {
     let created;
     if (Number.isInteger(Number(createdAt))) {
@@ -80,8 +47,8 @@ export default function EditJoke() {
       created = createdAt;
     }
 
+    // Assuming the backend adds an id
     const data = {
-      ...joke,
       Title: title,
       Body: body,
       Author: author,
@@ -90,7 +57,7 @@ export default function EditJoke() {
     };
 
     axios
-      .put(`https://retoolapi.dev/zu9TVE/jokes/${id}`, data)
+      .post(`https://retoolapi.dev/zu9TVE/jokes`, data)
       .then(() => {
         navigate("/");
       })
@@ -106,15 +73,8 @@ export default function EditJoke() {
         <button type="button" onClick={handleClose}>
           Close
         </button>
-        <button
-          type="button"
-          onClick={handleDelete}
-          style={{ marginLeft: "8px" }}
-        >
-          Delete
-        </button>
       </div>
-      <h1>Edit/Delete</h1>
+      <h1>Add a new joke</h1>
       <Form
         title={title}
         handleTitle={handleTitle}

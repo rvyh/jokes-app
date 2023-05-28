@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Root from './routes/root';
 import EditJoke from './routes/editJoke';
+import NewJoke from './routes/newJoke';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     path: "joke/:id",
     element: <EditJoke />
   },
+  {
+    path: "new",
+    element: <NewJoke />
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { dateFormatter, getColor } from "../utils";
 import ToggleTheme from "../common/toggleTheme";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Root() {
+  const navigate = useNavigate();
+
   const [jokes, setJokes] = useState([]);
   const [resultsPerPage, setResultsPerPage] = useState("5");
   const [page, setPage] = useState(1);
@@ -34,11 +36,19 @@ export default function Root() {
     if (jokes.length === Number(resultsPerPage)) setPage(page + 1);
   };
 
+  const handleNew = () => {
+    navigate("new");
+  };
+
   return (
     <>
       <ToggleTheme />
-      <p>buttons</p>
-      <table>
+      <div style={{ marginTop: "8px" }}>
+        <button type="button" onClick={handleNew}>
+          Add new joke
+        </button>
+      </div>
+      <table style={{ marginTop: "16px" }}>
         <thead>
           <tr>
             <th>Title</th>

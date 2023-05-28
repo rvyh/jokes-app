@@ -54,6 +54,7 @@ export default function Form(props) {
         <label htmlFor="Views">Views: </label>
         <input
           type="number"
+          min="0"
           id="Views"
           value={views}
           onChange={handleViews}
