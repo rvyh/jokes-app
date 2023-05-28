@@ -3,6 +3,7 @@ import axios from "axios";
 import Form from "../common/form";
 import ToggleTheme from "../common/toggleTheme";
 import { useNavigate } from "react-router-dom";
+import Auth from "../common/Auth";
 
 export default function NewJoke() {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ export default function NewJoke() {
 
   return (
     <>
+      <Auth />
       <ToggleTheme />
       <div style={{ marginTop: "8px" }}>
         <button type="button" onClick={handleClose}>

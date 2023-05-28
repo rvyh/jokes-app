@@ -3,6 +3,7 @@ import axios from "axios";
 import Form from "../common/form";
 import ToggleTheme from "../common/toggleTheme";
 import { useParams, useNavigate } from "react-router-dom";
+import Auth from "../common/Auth";
 
 export default function EditJoke() {
   let { id } = useParams();
@@ -101,6 +102,7 @@ export default function EditJoke() {
 
   return (
     <>
+      <Auth />
       <ToggleTheme />
       <div style={{ marginTop: "8px" }}>
         <button type="button" onClick={handleClose}>

@@ -9,6 +9,7 @@ import {
 import Root from './routes/root';
 import EditJoke from './routes/editJoke';
 import NewJoke from './routes/newJoke';
+import Login from './routes/login';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "new",
     element: <NewJoke />
+  },
+  {
+    path: "login",
+    element: <Login />
   }
 ]);
 

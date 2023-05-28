@@ -3,6 +3,7 @@ import axios from "axios";
 import { dateFormatter, getColor } from "../utils";
 import ToggleTheme from "../common/toggleTheme";
 import { Link, useNavigate } from "react-router-dom";
+import Auth from "../common/Auth";
 
 export default function Root() {
   const navigate = useNavigate();
@@ -37,15 +38,24 @@ export default function Root() {
   };
 
   const handleNew = () => {
-    navigate("new");
+    navigate("/new");
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
 
   return (
     <>
+      <Auth />
       <ToggleTheme />
       <div style={{ marginTop: "8px" }}>
         <button type="button" onClick={handleNew}>
           Add new joke
+        </button>
+        <button type="button" onClick={handleLogout} style={{ marginLeft: "8px" }}>
+          Logout
         </button>
       </div>
       <table style={{ marginTop: "16px" }}>
